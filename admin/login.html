@@ -91,6 +91,9 @@
               $('#myModal').modal()
               //模态框点击事件
               $('#myModal').on('hidden.bs.modal', function (e) {
+
+                //第一步:将token存入本地
+                localStorage.setItem('token',backData.token)
                 // do something...
                 window.location.href = './index.html'
               })
