@@ -38,39 +38,73 @@
     </div>
   </div>
 
+  <!-- 模态框 -->
+  <div class="modal fade" tabindex="-1" role="dialog" id="myModal">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+              aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">温馨提示</h4>
+        </div>
+        <div class="modal-body">
+          <p>One fine body&hellip;</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">确认</button>
+        </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+  </div><!-- /.modal -->
 
   <script>
     //1.入口函数
-    $(function(){
+    $(function () {
       //2.给确认按钮设置点击事件
-      $('.input_sub').on('click',function(e){
+      $('.input_sub').on('click', function (e) {
         //取消默认跳转
-      e.preventDefault();
-      //获得输入框信息
-      var userName = $('.input_txt').val().trim();
-      var passWord = $('.input_pass').val().trim();
-      //非空判断
-      if(userName == "" || passWord == ""){
-        alert('账号密码不能为空')
-        return;
-      }
-      //发送ajax请求
-      $.ajax({
-        type:'post',
-        dataType:'json',
-        url:'http://localhost:8080/api/v1/admin/user/info',
-        data:{
-          username:userName,
-          password:passWord
-        },
-        success:function(backData){
-          console.log(backData);
-          
+        e.preventDefault();
+        //获得输入框信息
+        var userName = $('.input_txt').val().trim();
+        var passWord = $('.input_pass').val().trim();
+        //非空判断
+        if (userName == "" || passWord == "") {
+          //模态框调用与修改
+          $('.modal-body>p').text('账号密码不能为空')
+          $('#myModal').modal()
+          return;
         }
+        //发送ajax请求
+        $.ajax({
+          type: 'post',
+          dataType: 'json',
+          url: 'http://localhost:8080/api/v1/admin/user/login',
+          data: {
+            username: userName,
+            password: passWord
+          },
+          success: function (backData) {
+            console.log(backData);
+            if (backData.code == 200) {
+              //模态框调用与修改
+              $('.modal-body>p').text('登录成功')
+              $('#myModal').modal()
+              //模态框点击事件
+              $('#myModal').on('hidden.bs.modal', function (e) {
+                // do something...
+                window.location.href = './index.html'
+              })
+
+            } else {
+              //模态框调用与修改
+              $('.modal-body>p').text(backData.msg)
+              $('#myModal').modal()
+            }
+          }
+        })
       })
     })
-    })
-    
+
   </script>
 </body>
 
