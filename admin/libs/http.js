@@ -24,7 +24,7 @@
         comment_list : baseURL + '/admin/comment/search',//文章评论列表
         comment_pass : baseURL + '/admin/comment/pass',//文章评论通过
         comment_reject : baseURL + '/admin/comment/reject',//文章评论不通过
-        comment_delete : baseURL + '/admin/comment/delete',//文章评论删除
+        comment_delete : baseURL + '/admin/comment/delete'//文章评论删除
     };
 
     w.BigNew = BigNew
