@@ -116,6 +116,14 @@
                 //排他思想修改样式
                 $(this).addClass('active').siblings().removeClass('active');
             })
+
+            //三.退出登录点击事件
+            $('.logout').on('click',function(){
+                //清除本地的token
+                localStorage.removeItem('token');
+                //跳回登录页面
+                window.location.href = './login.html'
+            })
         })
     </script>
 
